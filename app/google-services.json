@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "463262599723",
+    "firebase_url": "https://news-aggregator-fb-uat.firebaseio.com",
+    "project_id": "news-aggregator-fb-uat",
+    "storage_bucket": "news-aggregator-fb-uat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463262599723:android:ea4d386fb7b806e6",
+        "android_client_info": {
+          "package_name": "com.mycomp.fbaccesstokenupdater"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463262599723-83h5he5vi6jq7f3g0cvr12kbh9q3ukuv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz0QC7OGzFJlH0LMFM0GHzSjDKGxXV4Pg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463262599723:android:5783f98ecc9f4a1d",
+        "android_client_info": {
+          "package_name": "com.myfirm.newsaggregator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463262599723-83h5he5vi6jq7f3g0cvr12kbh9q3ukuv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz0QC7OGzFJlH0LMFM0GHzSjDKGxXV4Pg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
