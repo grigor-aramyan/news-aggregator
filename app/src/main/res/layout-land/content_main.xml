@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_layout_id"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.myfirm.newsaggregator.activities.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/progress_bar_layout_id"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar_id"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminateOnly="true"
+            android:indeterminateTint="@color/colorPurpleBold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress_bar_id"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:text="Loading ..." />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_content_layout"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toRightOf="@id/ntb_id"
+        app:layout_constraintRight_toLeftOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/posts_list_id"
+            android:padding="2dp"
+            android:layout_marginLeft="2dp"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false"
+            android:scrollbarThumbVertical="@color/colorYellow"
+            android:scrollbarSize="4dp"/>
+
+    </LinearLayout>
+
+    <WebView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/web_view_id"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/ntb_id"
+        app:layout_constraintBottom_toBottomOf="@id/main_content_layout" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/collapse_webview_ic_id"
+        android:src="@drawable/ic_arrow_drop_down_circle_white_24dp"
+        app:layout_constraintBottom_toTopOf="@id/web_view_id"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone" />
+
+    <devlight.io.library.ntb.NavigationTabBar
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        app:layout_constraintRight_toLeftOf="@id/main_content_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/ntb_id"
+        android:layout_marginLeft="20dp"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBoldGreen, null));
         setSupportActionBar(toolbar);
 
         initViews();
@@ -129,15 +130,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -288,7 +280,6 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onCompleted(GraphResponse response) {
                         try {
-                            //Log.e("mmm", "res: " + response.getRawResponse());
 
                             JSONObject initialData = new JSONObject(response.getRawResponse());
                             JSONArray postsArray = initialData.getJSONArray("data");
@@ -448,19 +439,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.tertam) {
             resetListAdapter(2);
         }
-        /*else if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -9,4 +9,5 @@
     <color name="colorYellow">#FFFF00</color>
     <color name="colorPurpleBold">#4A148C</color>
     <color name="colorAmber">#FFC107</color>
+    <color name="colorBoldGreen">#00695C</color>
 </resources>
