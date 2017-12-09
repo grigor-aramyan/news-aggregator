@@ -156,13 +156,9 @@ public class MainActivity extends AppCompatActivity
                         ResourcesCompat.getColor(getResources(), R.color.colorAccent, null)
         ).title("All news").build());
         models.add(new NavigationTabBar.Model.Builder(
-                        ContextCompat.getDrawable(getApplicationContext(),R.drawable.icons8_additional_24),
+                        ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_bookmark_white_24dp),
                         ResourcesCompat.getColor(getResources(), R.color.colorPurpleBold, null)
-                ).title("Ankakh.com").build());
-        models.add(new NavigationTabBar.Model.Builder(
-                ContextCompat.getDrawable(getApplicationContext(),R.drawable.icons8_map_24),
-                ResourcesCompat.getColor(getResources(), R.color.colorAmber, null)
-        ).title("Tert.am").build());
+                ).title("Bookmarked").build());
         mNtb.setModels(models);
         mNtb.setModelIndex(0);
         mNtb.setOnTabBarSelectedIndexListener(new NavigationTabBar.OnTabBarSelectedIndexListener() {
@@ -176,15 +172,15 @@ public class MainActivity extends AppCompatActivity
                 switch (index) {
                     case 0:
                         Toast.makeText(getApplicationContext(), "All news", Toast.LENGTH_LONG).show();
-                        resetListAdapter(0);
+                        mWithinBookmarks = false;
+                        resetListAdapter(mTabNavSelectedIndex);
+
                         break;
                     case 1:
-                        Toast.makeText(getApplicationContext(), "Ankakh.com", Toast.LENGTH_LONG).show();
-                        resetListAdapter(1);
-                        break;
-                    case 2:
-                        Toast.makeText(getApplicationContext(), "Tert.am", Toast.LENGTH_LONG).show();
-                        resetListAdapter(2);
+                        Toast.makeText(getApplicationContext(), "Bookmarked", Toast.LENGTH_LONG).show();
+                        mWithinBookmarks = true;
+                        resetListAdapter(mTabNavSelectedIndex);
+
                         break;
                     default:
                         break;
@@ -419,7 +415,7 @@ public class MainActivity extends AppCompatActivity
         }
         TransitionManager.beginDelayedTransition(mGlobalLayout);
         set2.applyTo(mGlobalLayout);
-
+        
         // animation for collapse webview icon
         SpringForce force = new SpringForce();
         force.setStiffness(SpringForce.STIFFNESS_VERY_LOW)
@@ -446,12 +442,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.all_news) {
-            mWithinBookmarks = false;
-            resetListAdapter(mTabNavSelectedIndex);
-        } else if (id == R.id.bookmarked) {
-            mWithinBookmarks = true;
-            resetListAdapter(mTabNavSelectedIndex);
-        } /*else if (id == R.id.nav_camera) {
+            resetListAdapter(0);
+        } else if (id == R.id.ankakh) {
+            resetListAdapter(1);
+        } else if (id == R.id.tertam) {
+            resetListAdapter(2);
+        }
+        /*else if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 

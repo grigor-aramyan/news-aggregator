@@ -6,12 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/all_news"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_trending_flat_black_24dp"
             android:title="All news" />
         <item
-            android:id="@+id/bookmarked"
-            android:icon="@drawable/ic_bookmark_black_24dp"
-            android:title="Bookmarked" />
+            android:id="@+id/ankakh"
+            android:icon="@drawable/ic_trending_flat_black_24dp"
+            android:title="Ankakh.com" />
+        <item
+            android:id="@+id/tertam"
+            android:icon="@drawable/ic_trending_flat_black_24dp"
+            android:title="Tert.am" />
         <!--item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
