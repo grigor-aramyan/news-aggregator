@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity
         toolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBoldGreen, null));
         setSupportActionBar(toolbar);
 
+        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
         initViews();
 
         FirebaseRDInstance.getRDInstance().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -386,6 +388,8 @@ public class MainActivity extends AppCompatActivity
             clearDBAndFetchFeeds(0);
 
             return true;
+        } else if (id == R.id.action_search) {
+            onSearchRequested();
         }
 
         return super.onOptionsItemSelected(item);
