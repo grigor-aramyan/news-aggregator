@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceLarge</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceLarge</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -19,6 +22,10 @@
     
     <style name="Toolbar.LargeToolbarTitleSize" parent="AppTheme.NoActionBar">
         <item name="android:textSize">30sp</item>
+    </style>
+    
+    <style name="myPopupMenuTextAppearanceLarge" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Large">
+        <item name="android:textSize">28sp</item>
     </style>
 
 </resources>

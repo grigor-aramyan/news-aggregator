@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.share.Share;
 import com.myfirm.newsaggregator.R;
+import com.myfirm.newsaggregator.animationInterpolators.MyBounceInterpolator;
 import com.myfirm.newsaggregator.realmModels.BookmarkedPostDataRealm;
 import com.myfirm.newsaggregator.utils.RealmInstance;
 import com.robertsimoes.shareable.Shareable;
@@ -135,6 +138,7 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.MyVi
             public void onClick(View view) {
                 if (postBookmarked[0]) {
                     holder.mPostBookmark.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_bookmark_white_24dp));
+                    animateButton(holder.mPostBookmark);
 
                     final RealmResults<BookmarkedPostDataRealm> results1 = RealmInstance.getRealm(mContext)
                             .where(BookmarkedPostDataRealm.class).equalTo("id", id).findAll();
@@ -148,8 +152,9 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.MyVi
                         }
                     });
                 } else {
-                    holder.mPostBookmark.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_bookmark_red_24dp));
                     postBookmarked[0] = true;
+                    holder.mPostBookmark.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_bookmark_red_24dp));
+                    animateButton(holder.mPostBookmark);
 
                     RealmInstance.getRealm(mContext).beginTransaction();
                     RealmInstance.getRealm(mContext).copyToRealmOrUpdate(
@@ -167,6 +172,15 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.MyVi
                 mPostSelectedListener.onPostSelected(link);
             }
         });
+    }
+
+    private void animateButton(ImageView bookmarkIcon) {
+        final Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.bounce);
+
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        animation.setInterpolator(interpolator);
+
+        bookmarkIcon.startAnimation(animation);
     }
 
     private void sharePost(int index, String name, String link) {
