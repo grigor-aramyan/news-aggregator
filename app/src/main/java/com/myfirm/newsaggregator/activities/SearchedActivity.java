@@ -82,11 +82,12 @@ public class SearchedActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_SEARCH)) {
             searchThePosts(intent.getStringExtra(SearchManager.QUERY));
+        } else if (intent.getAction().equals(Intent.ACTION_VIEW)) {
+            searchThePosts(intent.getDataString());
         }
     }
 
     private void searchThePosts(String searchQuery) {
-        Log.e("mmm", "query: " + searchQuery);
         RealmResults<PostDataRealm> results = RealmInstance.getRealm(getApplicationContext())
                 .where(PostDataRealm.class).like("name", "*" + searchQuery + "*",
                         Case.INSENSITIVE).findAll();

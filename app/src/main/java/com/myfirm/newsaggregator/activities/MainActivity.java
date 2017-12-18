@@ -1,9 +1,13 @@
 package com.myfirm.newsaggregator.activities;
 
 import android.animation.ObjectAnimator;
+import android.app.SearchManager;
+import android.content.SharedPreferences;
+import android.database.MatrixCursor;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.animation.DynamicAnimation;
 import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
@@ -12,6 +16,7 @@ import android.support.constraint.ConstraintSet;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,25 +32,31 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.share.Share;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.myfirm.newsaggregator.R;
 import com.myfirm.newsaggregator.adapters.PostsListAdapter;
+import com.myfirm.newsaggregator.contentProviders.CustomSearchSuggestionProvider;
 import com.myfirm.newsaggregator.realmModels.BookmarkedPostDataRealm;
 import com.myfirm.newsaggregator.realmModels.PostDataRealm;
 import com.myfirm.newsaggregator.utils.FirebaseRDInstance;
 import com.myfirm.newsaggregator.utils.RealmInstance;
+import com.myfirm.newsaggregator.utils.Statics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +66,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import devlight.io.library.ntb.NavigationTabBar;
@@ -95,7 +107,8 @@ public class MainActivity extends AppCompatActivity
     private SpringAnimation mSpringAnimation;
 
     // data
-    private List<String> mPageIds = Arrays.asList("ankakh.am", "Tertam.arm");
+    //private List<String> mPageIds = Arrays.asList("ankakh.am", "Tertam.arm");
+    private List<String> mPageIds = Arrays.asList("marketwatch", "nytimes");
     private AccessToken mFBAccessToken = null;
     private boolean mWithinBookmarks = false;
     //for persisting selected tab
@@ -185,6 +198,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void clearDBAndFetchFeeds(int index) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Statics.sSharedPrefForApp, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Statics.sSuggestions);
+        editor.commit();
+        CustomSearchSuggestionProvider.sDataUpdated = true;
+
         final RealmResults<PostDataRealm> results = RealmInstance.getRealm(getApplicationContext())
                 .where(PostDataRealm.class).findAll();
         RealmInstance.getRealm(getApplicationContext()).executeTransaction(new Realm.Transaction() {
@@ -289,6 +308,7 @@ public class MainActivity extends AppCompatActivity
                             JSONObject postData = null;
                             String link = null, name = null, createdTime = null,
                                     fullPicture = null, id = null;
+                            String forSearchSuggestions = "";
                             for (int i = 0; i < postsArray.length(); i++) {
                                 postData = postsArray.getJSONObject(i);
 
@@ -298,6 +318,8 @@ public class MainActivity extends AppCompatActivity
                                     createdTime = postData.getString("created_time");
                                     fullPicture = postData.getString("full_picture").replace("\\", "");
                                     id = postData.getString("id");
+
+                                    forSearchSuggestions += name + "##";
                                 } catch (JSONException jException) {
                                     continue;
                                 }
@@ -308,6 +330,16 @@ public class MainActivity extends AppCompatActivity
                                 );
                                 RealmInstance.getRealm(getApplicationContext()).commitTransaction();
                             }
+
+                            SharedPreferences sharedPreferences = getSharedPreferences(Statics.sSharedPrefForApp, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            if (sharedPreferences.getString(Statics.sSuggestions, "").isEmpty()) {
+                                editor.putString(Statics.sSuggestions, forSearchSuggestions);
+                            } else {
+                                editor.putString(Statics.sSuggestions, sharedPreferences.getString(Statics.sSuggestions, "")
+                                    + forSearchSuggestions);
+                            }
+                            editor.commit();
                         } catch (JSONException jExp) {
                             Toast.makeText(getApplicationContext(), "Unable to parse api response",
                                     Toast.LENGTH_LONG).show();

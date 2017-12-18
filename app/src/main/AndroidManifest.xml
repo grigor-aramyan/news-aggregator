@@ -39,6 +39,11 @@
             <meta-data android:name="android.app.searchable"
                        android:resource="@xml/searchable" />
         </activity>
+
+        <provider
+            android:authorities="com.myfirm.newsaggregator.contentProviders.CustomSearchSuggestionProvider"
+            android:name=".contentProviders.CustomSearchSuggestionProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
